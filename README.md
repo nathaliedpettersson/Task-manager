@@ -1,4 +1,4 @@
-## TaskManager
+## TaskManager (work in progress)
 
 - An app with the focus of helping people with ADHD to simply manage their tasks and be able to add/delete them. The goal is also to create some sort of time tracker to help calculate how much time each task is supposed to take, and how many tasks can be done in a day, realistically.
 
