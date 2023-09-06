@@ -53,11 +53,30 @@ import { afterUpdate } from 'svelte';
 
 <p>
     Your current tasks will take {sumOfAllTasks} hours.
-  </p>
+  </p> 
+
+  <div id="container">
+    <div>Monday</div>
+    <div>Tuesday</div>
+    <div>Wednesday</div>
+    <div>Thursday</div>
+    <div>Friday</div>
+  </div>
 
 <style>
     .checked {
         text-decoration: line-through;
+    }
+
+    #container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    #container div {
+        border: 2px solid black;
+        width: 20vw;
     }
 </style>
 
