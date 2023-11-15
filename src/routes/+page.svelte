@@ -27,42 +27,12 @@
     function removeTask(weekday, index) {
         WEEKDAY_TASKS = { ...WEEKDAY_TASKS, [weekday]: WEEKDAY_TASKS[weekday].filter((_, i) => i !== index) };
     }
-
-    $: sumOfAllTasks = DUMMY_TASKS.reduce((acc , t) => acc + t.time, 0);
-
-</script>
-
-<input bind:value={newTask} type="text" placeholder="My next task..." />
-<input bind:value={estimatedTime} type="num" placeholder="Estimated time in hours" />
-<Select id="weekday" name="weekday" bind:value={selected}>
-	<option value="monday">Mon</option>
-	<option value="tuesday">Tues</option>
-    <option value="wednesday">Wed</option>
-	<option value="thursday">Thurs</option>
-    <option value="friday">Fri</option>
-</Select>
-<button on:click={addNewTask}>Add</button>
-
-<br />
-{#each DUMMY_TASKS as item, index}
-    <input bind:checked={item.status} type="checkbox" />
-    <span class:checked={item.status}>{item.text} {item.time} {item.weekday}</span>
-    <button on:click={() => removeTask(index)}>❌</button>
-    <br />
-{/each}
-
-<p>
-    Your current tasks will take {sumOfAllTasks} hours.
-  </p> 
-
-  <div id="container">
-    <div>Monday</div>
-    <div>Tuesday</div>
-    <div>Wednesday</div>
-    <div>Thursday</div>
-    <div>Friday</div>
-  </div>
-
+    
+    $: sumOfAllTasks = Object.values(WEEKDAY_TASKS).reduce((acc, weekdayTasks) => {
+        return acc + weekdayTasks.reduce((total, task) => total + task.time, 0);
+    }, 0);
+    
+    </script>
 <style>
     .checked {
         text-decoration: line-through;
