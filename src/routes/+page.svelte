@@ -33,28 +33,39 @@
     }, 0);
     
     </script>
+    
+    <input bind:value={newTask} type="text" placeholder="My next task..." />
+    <input bind:value={estimatedTime} type="num" placeholder="Estimated time in hours" />
+    <Select id="weekday" name="weekday" bind:value={selected}>
+        <option value="monday">Mon</option>
+        <option value="tuesday">Tues</option>
+        <option value="wednesday">Wed</option>
+        <option value="thursday">Thurs</option>
+        <option value="friday">Fri</option>
+    </Select>
+    <button on:click={addNewTask}>Add</button>
+    
+    <br />
+    {#each Object.entries(WEEKDAY_TASKS) as [weekday, tasks]}
+        {#if tasks.length > 0}
+            <h3>{weekday}</h3>
+            {#each tasks as task, index}
+                <input bind:checked={task.status} type="checkbox" />
+                <span class:checked={task.status}>{task.text} {task.time} hours</span>
+                <button on:click={() => removeTask(weekday, index)}>❌</button>
+                <br />
+            {/each}
+        {/if}
+    {/each}
+    
+    <p>
+        Your current tasks will take {sumOfAllTasks} hours.
+    </p>
+    
 <style>
     .checked {
         text-decoration: line-through;
     }
-
-    #container {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-    }
-
-    #container div {
-        border: 2px solid black;
-        width: 20vw;
-    }
 </style>
 
-<!-- 
-Plan for this app is: 
 
-- Figure out how to add weekday when adding task, and filter this in the right column 
-- Handle deleting tasks differently depending on which day you're on
-- How to store my tasks? Local storage or some database? 
-- Look into adding a field for time and also set some default time/day for example 12 hours (this should also calculate each tasks time that day) 
-- Styling ofc  -->
