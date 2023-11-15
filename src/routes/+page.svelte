@@ -1,31 +1,31 @@
 <script>
-// @ts-nocheck
-
-import Select from "./Select.svelte";
-import { afterUpdate } from 'svelte';
-   
+    // @ts-nocheck
+    
+    import Select from "./Select.svelte";
+    
     let newTask = "";
     let estimatedTime;
     /**
      * @type {any}
      */
     let selected;
-
-    let DUMMY_TASKS = [
-        { text: "First task", time: 1, weekday: "Monday", status: true },
-        { text: "Second task", time: 3, weekday: "Tuesday", status: false },
-        { text: "Third task", time: 6, weekday: "Wednesday", status: false },
-    ];
-
+    
+    let WEEKDAY_TASKS = {
+        monday: [],
+        tuesday: [],
+        wednesday: [],
+        thursday: [],
+        friday: [],
+    };
+    
     function addNewTask() {
-        DUMMY_TASKS = [...DUMMY_TASKS, { text: newTask, time: estimatedTime, weekday: selected, status: false }];
+        WEEKDAY_TASKS = { ...WEEKDAY_TASKS, [selected]: [...WEEKDAY_TASKS[selected], { text: newTask, time: Number(estimatedTime), status: false }] };
         newTask = "";
     }
-
+    
     // @ts-ignore
-    function removeTask(index) {
-        DUMMY_TASKS.splice(index, 1);
-        DUMMY_TASKS = DUMMY_TASKS;
+    function removeTask(weekday, index) {
+        WEEKDAY_TASKS = { ...WEEKDAY_TASKS, [weekday]: WEEKDAY_TASKS[weekday].filter((_, i) => i !== index) };
     }
 
     $: sumOfAllTasks = DUMMY_TASKS.reduce((acc , t) => acc + t.time, 0);
